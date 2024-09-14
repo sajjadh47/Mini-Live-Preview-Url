@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Mini Live Preview URL
-Plugin URI : https://github.com/Sajjad-Hossain-Sagor/Mini-Live-Preview-URL
+Plugin URI : https://wordpress.org/plugins/mini-live-preview-url/
 Description: Mini Live Preview URL is a simple Wordpress plugin for adding live previews of links on mouse hover.
-Version: 1.0.1
+Version: 1.0.3
 Author: Sajjad Hossain Sagor
-Author URI: https://profiles.wordpress.org/sajjad67
+Author URI: https://sajjadhsagor.com
 Text Domain: wp-mini-live-preview-url
 Domain Path: /languages
 
@@ -30,6 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // Define Plugin Folders Path
 // ---------------------------------------------------------
 define( "WPMLPU_PLUGIN_PATH", plugin_dir_path( __FILE__ ) );
+
 define( "WPMLPU_PLUGIN_URL", plugin_dir_url( __FILE__ ) );
 
 // Action to add some style and script
@@ -38,8 +39,8 @@ add_action( 'wp_enqueue_scripts', 'wpmlpu_enqueue_frontend_scripts' );
 // add plugin url to site header
 add_action( 'wp_head', function()
 {
-	echo "<script> var WPMLPU_PLUGIN_URL = '".WPMLPU_PLUGIN_URL."'</script>";
-});
+	echo "<script> var WPMLPU_PLUGIN_URL = '" . WPMLPU_PLUGIN_URL . "'</script>";
+} );
 
 // add settings api wrapper
 require WPMLPU_PLUGIN_PATH . '/includes/class.settings-api.php';
@@ -51,80 +52,80 @@ require WPMLPU_PLUGIN_PATH . '/includes/class.settings-api.php';
  */
 class WPMLPU_SETTINGS
 {
-    private $settings_api;
+	private $settings_api;
 
-    function __construct()
-    {    
-        $this->settings_api = new WpMiniLivePreviewUrl_Settings_API;
+	function __construct()
+	{    
+		$this->settings_api = new WpMiniLivePreviewUrl_Settings_API;
 
-        add_action( 'admin_init', array( $this, 'admin_init') );
-        
-        add_action( 'admin_menu', array( $this, 'admin_menu') );
-    }
+		add_action( 'admin_init', array( $this, 'admin_init') );
+		
+		add_action( 'admin_menu', array( $this, 'admin_menu') );
+	}
 
-    public function admin_init()
-    {
-        //set the settings
-        $this->settings_api->set_sections( $this->get_settings_sections() );
-        
-        $this->settings_api->set_fields( $this->get_settings_fields() );
+	public function admin_init()
+	{
+		//set the settings
+		$this->settings_api->set_sections( $this->get_settings_sections() );
+		
+		$this->settings_api->set_fields( $this->get_settings_fields() );
 
-        //initialize settings
-        $this->settings_api->admin_init();
-    }
+		//initialize settings
+		$this->settings_api->admin_init();
+	}
 
-    public function admin_menu()
-    {
-        add_options_page( 'Mini Live Preview URL', 'Mini Live Preview URL', 'manage_options', 'wp-mini-live-preview-url.php', array( $this, 'render_mini_live_preview_url_settings' ) );
-    }
+	public function admin_menu()
+	{
+		add_options_page( 'Mini Live Preview URL', 'Mini Live Preview URL', 'manage_options', 'wp-mini-live-preview-url.php', array( $this, 'render_mini_live_preview_url_settings' ) );
+	}
 
-    public function get_settings_sections()
-    {
-        $sections = array(
-            array(
-                'id'    => 'wpmlpu_basic_settings',
-                'title' => __( 'General Settings', 'wp-mini-live-preview-url' )
-            )
-        );
-        
-        return $sections;
-    }
+	public function get_settings_sections()
+	{
+		$sections = array(
+			array(
+				'id'    => 'wpmlpu_basic_settings',
+				'title' => __( 'General Settings', 'wp-mini-live-preview-url' )
+			)
+		);
+		
+		return $sections;
+	}
 
-    /**
-     * Returns all the settings fields
-     *
-     * @return array settings fields
-     */
-    public function get_settings_fields()
-    {
+	/**
+	 * Returns all the settings fields
+	 *
+	 * @return array settings fields
+	 */
+	public function get_settings_fields()
+	{
 		$settings_fields = array(
-            'wpmlpu_basic_settings' => array(
-                array(
-                    'name'    => 'enable_preview',
-                    'label'   => __( 'Enable URL Preview', 'wp-mini-live-preview-url' ),
-                    'type'    => 'checkbox'
-                )    
-            )
-        );
+			'wpmlpu_basic_settings' => array(
+				array(
+					'name'    => 'enable_preview',
+					'label'   => __( 'Enable URL Preview', 'wp-mini-live-preview-url' ),
+					'type'    => 'checkbox'
+				)    
+			)
+		);
 
-        return $settings_fields;
-    }
+		return $settings_fields;
+	}
 
-    /**
-     * Render settings fields
-     *
-     */
+	/**
+	 * Render settings fields
+	 *
+	 */
 
-    public function render_mini_live_preview_url_settings()
-    {    
-        echo '<div class="wrap">';
+	public function render_mini_live_preview_url_settings()
+	{    
+		echo '<div class="wrap">';
 
-	        $this->settings_api->show_navigation();
-	       
-	        $this->settings_api->show_forms();
+			$this->settings_api->show_navigation();
+		   
+			$this->settings_api->show_forms();
 
-        echo '</div>';
-    }
+		echo '</div>';
+	}
 }
 
 /**
@@ -135,14 +136,14 @@ class WPMLPU_SETTINGS
 
 function wpmlpu_get_option( $option, $section, $default = '' )
 {
-    $options = get_option( $section );
+	$options = get_option( $section );
 
-    if ( isset( $options[$option] ) )
-    {
-        return $options[$option];
-    }
+	if ( isset( $options[$option] ) )
+	{
+		return $options[$option];
+	}
 
-    return $default;
+	return $default;
 }
 
 $wpmlpu_settings = new WPMLPU_SETTINGS();
@@ -162,5 +163,5 @@ function wpmlpu_enqueue_frontend_scripts()
 	// Enqueue Mini Preview JS Files
 	wp_enqueue_script( 'wpmlpu-minipreview-script', WPMLPU_PLUGIN_URL . 'assets/js/jquery.minipreview.js', array( 'jquery' ), time(), true );
 	
-    wp_enqueue_script( 'wpmlpu-main-script', 		WPMLPU_PLUGIN_URL . 'assets/js/script.js', array( 'wpmlpu-minipreview-script' ), time(), true );
+	wp_enqueue_script( 'wpmlpu-main-script', 		WPMLPU_PLUGIN_URL . 'assets/js/script.js', array( 'wpmlpu-minipreview-script' ), time(), true );
 }
