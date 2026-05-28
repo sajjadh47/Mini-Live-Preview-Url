@@ -13,7 +13,7 @@
  * Plugin Name:       Mini Live Preview URL
  * Plugin URI:        https://wordpress.org/plugins/mini-live-preview-url/
  * Description:       Mini Live Preview URL is a simple WordPress plugin for adding live previews of links on mouse hover.
- * Version:           2.0.3
+ * Version:           2.0.4
  * Requires at least: 5.6
  * Requires PHP:      8.0
  * Author:            Sajjad Hossain Sagor
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'MINI_LIVE_PREVIEW_URL_PLUGIN_VERSION', '2.0.3' );
+define( 'MINI_LIVE_PREVIEW_URL_PLUGIN_VERSION', '2.0.4' );
 
 /**
  * Define Plugin Folders Path
